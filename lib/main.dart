@@ -1,9 +1,14 @@
-import 'package:OAuth/screens/first_screen.dart';
-import 'package:OAuth/screens/secondScreen.dart';
+import './screens/first_screen.dart';
+// import './screens/secondScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
