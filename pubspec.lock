@@ -86,7 +86,11 @@ packages:
     source: hosted
     version: "0.3.0+1"
   firebase_core:
+<<<<<<< HEAD
+    dependency: transitive
+=======
     dependency: "direct main"
+>>>>>>> 02cd7a068a782d3f51023eee00ba031e5e29620c
     description:
       name: firebase_core
       url: "https://pub.dartlang.org"
@@ -111,6 +115,8 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+<<<<<<< HEAD
+=======
   flutter_facebook_login:
     dependency: "direct main"
     description:
@@ -118,6 +124,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
+>>>>>>> 02cd7a068a782d3f51023eee00ba031e5e29620c
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -128,8 +135,34 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+<<<<<<< HEAD
+  google_sign_in:
+    dependency: "direct main"
+    description:
+      name: google_sign_in
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.5.3"
+  google_sign_in_platform_interface:
+    dependency: transitive
+    description:
+      name: google_sign_in_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.2"
+  google_sign_in_web:
+    dependency: transitive
+    description:
+      name: google_sign_in_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.1+1"
+  http:
+    dependency: transitive
+=======
   http:
     dependency: "direct main"
+>>>>>>> 02cd7a068a782d3f51023eee00ba031e5e29620c
     description:
       name: http
       url: "https://pub.dartlang.org"
