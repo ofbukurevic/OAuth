@@ -15,11 +15,15 @@ class LoginFunction {
     final result = await facebookLogin.logIn(['email']);
     final token = result.accessToken.token;
     final graphResponse = await http.get(
-        'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=${token}');
+        'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=$token');
     print(graphResponse.body);
     if (result.status == FacebookLoginStatus.loggedIn) {
       final credential = FacebookAuthProvider.credential(token);
       _auth.signInWithCredential(credential);
     }
+  }
+
+  Future<void> signOut() async {
+    return _auth.signOut();
   }
 }

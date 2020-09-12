@@ -1,8 +1,9 @@
 
-import '../screens/secondScreen.dart';
 import '../widgets/social_media_button.dart';
 import '../functions/login_functions.dart';
 import 'package:flutter/material.dart';
+
+import 'package:provider/provider.dart';
 
 class FirstScreen extends StatefulWidget {
   const FirstScreen({Key key}) : super(key: key);
@@ -12,12 +13,12 @@ class FirstScreen extends StatefulWidget {
 }
 
 class _FirstScreenState extends State<FirstScreen> {
-  
- final LoginFunction _loginFunction = LoginFunction();
-  
+
+  final LoginFunction _loginFunction = LoginFunction();
 
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
