@@ -6,6 +6,17 @@ class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.amber,
+        actions: [
+          IconButton(
+              icon: Icon(
+                Icons.subdirectory_arrow_left,
+                color: Colors.white,
+              ),
+              onPressed: () {}),
+        ],
+      ),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
