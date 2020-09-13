@@ -23,6 +23,7 @@ class LoginFunction {
     }
   }
 
+
   Future<void> signOut() async {
     return _auth.signOut();
   }
