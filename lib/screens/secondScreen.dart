@@ -20,7 +20,6 @@ class _SecondScreenState extends State<SecondScreen> {
 
   @override
   Widget build(BuildContext context) {
- 
     return FutureBuilder<DocumentSnapshot>(
       future: _firebaseFirestore
           .collection("AllUsers")

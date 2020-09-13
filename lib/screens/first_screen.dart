@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-import '../screens/secondScreen.dart';
-=======
->>>>>>> 32a5d5431a1d6352498417630ccd249620e4e1eb
 import '../widgets/social_media_button.dart';
 import '../functions/login_functions.dart';
 import 'package:flutter/material.dart';
