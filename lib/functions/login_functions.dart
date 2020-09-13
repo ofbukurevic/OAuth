@@ -116,13 +116,13 @@ class LoginFunction {
       print('signInWithGoogle succeeded: $user');
       final Korisnik finalUser =
           createUser(user, user.displayName, user.photoURL);
+      await addUserToFirebase(finalUser);
       return finalUser;
     }
 
     assert(!user.isAnonymous);
     assert(await user.getIdToken() != null);
 
-    print(user);
     final Korisnik finalUser =
         createUser(user, user.displayName, user.photoURL);
     print(finalUser);
@@ -137,6 +137,8 @@ class LoginFunction {
   // }
 
   Future<void> signOut() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    googleSignIn.signOut();
     return _auth.signOut();
   }
 
