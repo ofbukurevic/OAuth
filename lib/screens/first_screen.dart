@@ -1,9 +1,17 @@
-import 'package:OAuth/widgets/social_media_button.dart';
+import '../screens/secondScreen.dart';
 import '../widgets/social_media_button.dart';
+import '../functions/login_functions.dart';
 import 'package:flutter/material.dart';
 
-class FirstScreen extends StatelessWidget {
+class FirstScreen extends StatefulWidget {
   const FirstScreen({Key key}) : super(key: key);
+
+  @override
+  _FirstScreenState createState() => _FirstScreenState();
+}
+
+class _FirstScreenState extends State<FirstScreen> {
+  final LoginFunction _loginFunction = LoginFunction();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +36,7 @@ class FirstScreen extends StatelessWidget {
               ),
               SocialMediaButton(
                 naslovSoc: 'Facebook',
-                onPressed: () {},
+                onPressed: _loginFunction.facebookLogin,
                 bojaTipke: Colors.blue[700],
                 bojaNaslova: Colors.white,
               ),
