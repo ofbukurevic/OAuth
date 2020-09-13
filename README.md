@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# OAuth
-=======
 # task3
->>>>>>> 02cd7a068a782d3f51023eee00ba031e5e29620c
 
 A new Flutter project.
 

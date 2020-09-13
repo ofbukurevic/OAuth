@@ -1,9 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-<<<<<<< HEAD
-    package="com.example.OAuth">
-=======
     package="com.example.task3">
->>>>>>> 02cd7a068a782d3f51023eee00ba031e5e29620c
     <!-- Flutter needs it to communicate with the running application
          to allow setting breakpoints, to provide hot reload, etc.
     -->
