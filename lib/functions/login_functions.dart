@@ -13,16 +13,37 @@ class LoginFunction {
     return _auth.authStateChanges();
   }
 
-  void facebookLogin() async {
+  Future<Korisnik> facebookLogin() async {
     FacebookLogin facebookLogin = FacebookLogin();
     final result = await facebookLogin.logIn(['email']);
     final token = result.accessToken.token;
     final graphResponse = await http.get(
         'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=$token');
     print(graphResponse.body);
-    if (result.status == FacebookLoginStatus.loggedIn) {
-      final credential = FacebookAuthProvider.credential(token);
-      _auth.signInWithCredential(credential);
+
+    switch (result.status) {
+      case FacebookLoginStatus.loggedIn:
+        final credential = FacebookAuthProvider.credential(token);
+        UserCredential userCredential =
+            await _auth.signInWithCredential(credential);
+        final User user = userCredential.user;
+        final Korisnik finalUser =
+            createUser(user, user.displayName, user.photoURL);
+        await addUserToFirebase(finalUser);
+        return finalUser;
+
+        break;
+
+      case FacebookLoginStatus.cancelledByUser:
+        print('canceled by user');
+        return null;
+        break;
+      case FacebookLoginStatus.error:
+        print('error');
+        return null;
+        break;
+      default:
+        return null;
     }
   }
 
