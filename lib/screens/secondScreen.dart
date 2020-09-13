@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../functions/login_functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:task3/models/UserModel.dart';
 import 'package:task3/functions/login_functions.dart';
 
 class SecondScreen extends StatefulWidget {
@@ -20,7 +19,30 @@ class _SecondScreenState extends State<SecondScreen> {
 
   @override
   Widget build(BuildContext context) {
- 
+<<<<<<< HEAD
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.amber,
+        actions: [
+          IconButton(
+              icon: Icon(
+                Icons.subdirectory_arrow_left,
+                color: Colors.white,
+              ),
+              onPressed: () {}),
+        ],
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/image.png'),
+              fit: BoxFit.cover,
+              alignment: Alignment.topRight),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+=======
     return FutureBuilder<DocumentSnapshot>(
       future: _firebaseFirestore
           .collection("AllUsers")
@@ -35,6 +57,7 @@ class _SecondScreenState extends State<SecondScreen> {
         if (snapshot.connectionState == ConnectionState.done) {
           print(_auth.currentUser.uid);
           return Stack(
+>>>>>>> master
             children: [
               Container(
                 decoration: BoxDecoration(

@@ -1,8 +1,8 @@
+import 'package:task3/screens/secondScreen.dart';
+
 import '../widgets/social_media_button.dart';
 import '../functions/login_functions.dart';
 import 'package:flutter/material.dart';
-
-import 'package:provider/provider.dart';
 
 class FirstScreen extends StatefulWidget {
   const FirstScreen({Key key}) : super(key: key);
@@ -45,7 +45,17 @@ class _FirstScreenState extends State<FirstScreen> {
             ),
             SocialMediaButton(
               naslovSoc: 'Google',
-              onPressed: () {},
+              onPressed: () {
+                _loginFunction.signInWithGoogle().whenComplete(() {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return SecondScreen();
+                      },
+                    ),
+                  );
+                });
+              },
             ),
             SizedBox(
               height: 10,
