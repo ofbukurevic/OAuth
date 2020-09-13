@@ -117,6 +117,7 @@ class LoginFunction {
     print('signInWithGoogle succeeded: $user');
     final Korisnik finalUser =
         createUser(user, user.displayName, user.photoURL);
+          await addUserToFirebase(finalUser);
     return finalUser;
   }
 
