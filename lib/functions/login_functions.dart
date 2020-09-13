@@ -86,7 +86,6 @@ class LoginFunction {
   }
 
   Future<Korisnik> signInWithGoogle() async {
-
     final GoogleSignIn googleSignIn = GoogleSignIn();
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
@@ -103,22 +102,22 @@ class LoginFunction {
     final User user = authResult.user;
 
     if (user != null) {
-    // Checking if email and name is null
-    assert(user.email != null);
-    assert(user.displayName != null);
-    assert(user.photoURL != null);
-    name = user.displayName;
-    email = user.email;
-    imageUrl = user.photoURL;
-    assert(!user.isAnonymous);
-    assert(await user.getIdToken() != null);
-    final User currentUser = _auth.currentUser;
-    assert(user.uid == currentUser.uid);
-    print('signInWithGoogle succeeded: $user');
-    final Korisnik finalUser =
-        createUser(user, user.displayName, user.photoURL);
-    return finalUser;
-  }
+      // Checking if email and name is null
+      assert(user.email != null);
+      assert(user.displayName != null);
+      assert(user.photoURL != null);
+      name = user.displayName;
+      email = user.email;
+      imageUrl = user.photoURL;
+      assert(!user.isAnonymous);
+      assert(await user.getIdToken() != null);
+      final User currentUser = _auth.currentUser;
+      assert(user.uid == currentUser.uid);
+      print('signInWithGoogle succeeded: $user');
+      final Korisnik finalUser =
+          createUser(user, user.displayName, user.photoURL);
+      return finalUser;
+    }
 
     assert(!user.isAnonymous);
     assert(await user.getIdToken() != null);
@@ -126,6 +125,7 @@ class LoginFunction {
     print(user);
     final Korisnik finalUser =
         createUser(user, user.displayName, user.photoURL);
+    print(finalUser);
     await addUserToFirebase(finalUser);
     return finalUser;
   }
