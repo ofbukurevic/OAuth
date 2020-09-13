@@ -4,5 +4,13 @@ class Korisnik {
   final String uid;
   final String username;
   final String profileImageUrl;
-  Korisnik({@required this.uid, this.username, this.profileImageUrl});
+  String platforma;
+
+  Korisnik(
+      {@required this.uid,
+      this.username,
+      this.profileImageUrl,
+      this.platforma});
+
+  Korisnik user;
 }
