@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../functions/login_functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:task3/models/UserModel.dart';
 import 'package:task3/functions/login_functions.dart';
 
 class SecondScreen extends StatefulWidget {
@@ -20,7 +19,6 @@ class _SecondScreenState extends State<SecondScreen> {
 
   @override
   Widget build(BuildContext context) {
- 
     return FutureBuilder<DocumentSnapshot>(
       future: _firebaseFirestore
           .collection("AllUsers")
