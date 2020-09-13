@@ -9,6 +9,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class LoginFunction {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  String name;
+  String email;
+  String imageUrl;
 
   Stream<User> get user {
     return _auth.authStateChanges();
@@ -82,9 +85,9 @@ class LoginFunction {
     }
   }
 
-  final GoogleSignIn googleSignIn = GoogleSignIn();
-
   Future<Korisnik> signInWithGoogle() async {
+
+    final GoogleSignIn googleSignIn = GoogleSignIn();
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
         await googleSignInAccount.authentication;
@@ -96,25 +99,42 @@ class LoginFunction {
 
     final UserCredential authResult =
         await _auth.signInWithCredential(credential);
+
     final User user = authResult.user;
+
+    if (user != null) {
+    // Checking if email and name is null
+    assert(user.email != null);
+    assert(user.displayName != null);
+    assert(user.photoURL != null);
+    name = user.displayName;
+    email = user.email;
+    imageUrl = user.photoURL;
+    assert(!user.isAnonymous);
+    assert(await user.getIdToken() != null);
+    final User currentUser = _auth.currentUser;
+    assert(user.uid == currentUser.uid);
+    print('signInWithGoogle succeeded: $user');
+    final Korisnik finalUser =
+        createUser(user, user.displayName, user.photoURL);
+    return finalUser;
+  }
 
     assert(!user.isAnonymous);
     assert(await user.getIdToken() != null);
 
-    final User currentUser = _auth.currentUser;
-    assert(user.uid == currentUser.uid);
-
+    print(user);
     final Korisnik finalUser =
-        createUser(currentUser, currentUser.displayName, currentUser.photoURL);
+        createUser(user, user.displayName, user.photoURL);
     await addUserToFirebase(finalUser);
     return finalUser;
   }
 
-  void signOutGoogle() async {
-    await googleSignIn.signOut();
+  // void signOutGoogle() async {
+  //   await googleSignIn.signOut();
 
-    print("User Sign Out");
-  }
+  //   print("User Sign Out");
+  // }
 
   Future<void> signOut() async {
     return _auth.signOut();

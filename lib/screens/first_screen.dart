@@ -46,15 +46,16 @@ class _FirstScreenState extends State<FirstScreen> {
             SocialMediaButton(
               naslovSoc: 'Google',
               onPressed: () {
-                _loginFunction.signInWithGoogle().whenComplete(() {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return SecondScreen();
-                      },
-                    ),
-                  );
-                });
+                _loginFunction.signInWithGoogle();
+                // .whenComplete(() {
+                //   Navigator.of(context).push(
+                //     MaterialPageRoute(
+                //       builder: (context) {
+                //         return SecondScreen();
+                //       },
+                //     ),
+                //   );
+                // });
               },
             ),
             SizedBox(
