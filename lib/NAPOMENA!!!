@@ -1,0 +1,5 @@
+ 
+
+ Obratite pažnju na "addUserToFirebase" metod u /functions/login_functions.dart.
+ Pronađite url slike profila,uid i username te ga pošaljite na Cloud Firestore preko ove metode. 
+ Pozovite je nakon što se user uspješno logujete kako bi izbjegli glavobolje na SecondScreen()
