@@ -1,4 +1,5 @@
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_twitter_login/flutter_twitter_login.dart';
@@ -79,6 +80,40 @@ class LoginFunction {
         print("An Error Ocurred");
         break;
     }
+  }
+
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  Future<Korisnik> signInWithGoogle() async {
+    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+
+    final UserCredential authResult =
+        await _auth.signInWithCredential(credential);
+    final User user = authResult.user;
+
+    assert(!user.isAnonymous);
+    assert(await user.getIdToken() != null);
+
+    final User currentUser = _auth.currentUser;
+    assert(user.uid == currentUser.uid);
+
+    final Korisnik finalUser =
+        createUser(currentUser, currentUser.displayName, currentUser.photoURL);
+    await addUserToFirebase(finalUser);
+    return finalUser;
+  }
+
+  void signOutGoogle() async {
+    await googleSignIn.signOut();
+
+    print("User Sign Out");
   }
 
   Future<void> signOut() async {
