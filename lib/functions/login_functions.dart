@@ -12,6 +12,7 @@ class LoginFunction {
   String name;
   String email;
   String imageUrl;
+  Korisnik korisnik;
 
   Stream<User> get user {
     return _auth.authStateChanges();
@@ -32,8 +33,9 @@ class LoginFunction {
             await _auth.signInWithCredential(credential);
         final User user = userCredential.user;
         final Korisnik finalUser =
-            createUser(user, user.displayName, user.photoURL);
-        await addUserToFirebase(finalUser);
+            createUser(user, user.displayName, user.photoURL, "Facebook");
+        korisnik = finalUser;
+        await addUserToFirebase(finalUser, "Facebook");
         return finalUser;
 
         break;
@@ -51,9 +53,14 @@ class LoginFunction {
     }
   }
 
-  Korisnik createUser(User user, String username, String photUrl) {
+  Korisnik createUser(
+      User user, String username, String photUrl, String platforma) {
     return user != null
-        ? Korisnik(uid: user.uid, username: username, profileImageUrl: photUrl)
+        ? Korisnik(
+            uid: user.uid,
+            username: username,
+            profileImageUrl: photUrl,
+            platforma: platforma)
         : null;
   }
 
@@ -61,7 +68,6 @@ class LoginFunction {
     final TwitterLogin twitterLogin = new TwitterLogin(
         consumerKey: "wvhUL3i41kSEXMMoRGS7USi9s",
         consumerSecret: "EY9OQO3rWgsR5cm7RTXdX5b2l5hq3U3NWOySzdXiHcjHCtvo3H");
-
     final TwitterLoginResult result = await twitterLogin.authorize();
     final TwitterSession session = result.session;
 
@@ -75,8 +81,9 @@ class LoginFunction {
         final userCreds = await _auth.signInWithCredential(credential);
         final User user = userCreds.user;
         final Korisnik finalUser =
-            createUser(user, user.displayName, user.photoURL);
-        await addUserToFirebase(finalUser);
+            createUser(user, user.displayName, user.photoURL, "Twitter");
+        await addUserToFirebase(finalUser, "Twitter");
+        korisnik = finalUser;
         return finalUser;
         break;
       case TwitterLoginStatus.error:
@@ -115,36 +122,53 @@ class LoginFunction {
       assert(user.uid == currentUser.uid);
       print('signInWithGoogle succeeded: $user');
       final Korisnik finalUser =
-          createUser(user, user.displayName, user.photoURL);
+          createUser(user, user.displayName, user.photoURL, 'Google');
+      await addUserToFirebase(finalUser, 'Google');
       return finalUser;
     }
 
     assert(!user.isAnonymous);
     assert(await user.getIdToken() != null);
 
-    print(user);
     final Korisnik finalUser =
-        createUser(user, user.displayName, user.photoURL);
+        createUser(user, user.displayName, user.photoURL, 'Google');
     print(finalUser);
-    await addUserToFirebase(finalUser);
+    await addUserToFirebase(finalUser, 'Google');
     return finalUser;
   }
 
-  // void signOutGoogle() async {
-  //   await googleSignIn.signOut();
-
-  //   print("User Sign Out");
-  // }
-
   Future<void> signOut() async {
-    return _auth.signOut();
+    DocumentSnapshot docRef = await _firebaseFirestore
+        .collection("AllUsers")
+        .doc(_auth.currentUser.uid)
+        .get();
+    final s = docRef.data();
+
+    switch (s["platforma"]) {
+      case "Facebook":
+        await FacebookLogin().logOut();
+        _auth.signOut();
+        break;
+      case "Twitter":
+        await TwitterLogin(
+                consumerKey: "wvhUL3i41kSEXMMoRGS7USi9s",
+                consumerSecret:
+                    "EY9OQO3rWgsR5cm7RTXdX5b2l5hq3U3NWOySzdXiHcjHCtvo3H")
+            .logOut();
+        _auth.signOut();
+        break;
+      case "Google":
+        await GoogleSignIn().signOut();
+        _auth.signOut();
+    }
   }
 
-  Future<void> addUserToFirebase(Korisnik user) async {
+  Future<void> addUserToFirebase(Korisnik user, String platforma) async {
     await _firebaseFirestore.collection("AllUsers").doc(user.uid).set({
       "uid": user.uid,
       "username": user.username,
-      "photoUrl": user.profileImageUrl
+      "photoUrl": user.profileImageUrl,
+      "platforma": platforma
     });
   }
 }
