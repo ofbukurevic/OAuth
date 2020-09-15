@@ -157,7 +157,7 @@ class LoginFunction {
             .logOut();
         _auth.signOut();
         break;
-      case "Goole":
+      case "Google":
         await GoogleSignIn().signOut();
         _auth.signOut();
     }
